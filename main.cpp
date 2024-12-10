@@ -67,5 +67,5 @@ int main()
 
 void createCoffeeCustomer(CoffeeCustomer*& head, string name, string drinkOrder)
 {
-
+    CoffeeCustomer* customer = new CoffeeCustomer(name, drinkOrder);
 }

@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <deque>
 #include <iostream>
 #include <string>
 using namespace std;
@@ -41,9 +42,12 @@ struct OtherVendorCustomer
 // global const variables
 const int ARRAY_SIZE = 5;
 const int INITIAL_CUSTOMERS = 3;
+const int PROBABILITY = 50;
+const int ROUNDS = 10;
 
 // function prototypes
 void coffeeBooth(CoffeeCustomer*&, string[], string[], int);
+void muffinBooth(deque<OtherVendorCustomer>&, string[], string[], int);
 
 int main()
 {
@@ -52,6 +56,7 @@ int main()
     // creation of data arrays with names and drink orders from which to randomly create customer data
     string names[] = {"Alice", "Bob", "Charlie", "Diana", "Eve"};
     string drinks[] = {"Latte", "Espresso", "Cappuccino", "Mocha", "Americano"};
+    string muffins[] = 
 
     CoffeeCustomer* coffeeBoothQueue = nullptr; // initialization of the coffee booth queue
 
@@ -76,7 +81,14 @@ int main()
             temp->next = customerJoins;
         }
 
-        cout << "Initial coffee customer joining the queue: " << name << "Drink order: " << drinkOrder << endl;
+        cout << "Initial coffee customer joining the queue: " << name << ", Drink order: " << drinkOrder << endl;
+    }
+
+    // run the simulation for 10 rounds
+    for (int round = 1; round <= ROUNDS; round++)
+    {
+        cout << endl << "Round: " << round << endl;
+        coffeeBooth(coffeeBoothQueue, names, drinks, ARRAY_SIZE);
     }
 
     return 0;
@@ -86,7 +98,7 @@ void coffeeBooth(CoffeeCustomer*& customer, string names[], string drinks[], int
 {
     int prob = rand() % 100 + 1;
     // 50% probability that someone will join the queue
-    if (prob <= 50)
+    if (prob <= PROBABILITY)
     {
         string name = names[rand() % ARRAY_SIZE]; // randomly choose a name
         string drinkOrder = drinks[rand() % ARRAY_SIZE]; // randomly choose a drink
@@ -107,12 +119,12 @@ void coffeeBooth(CoffeeCustomer*& customer, string names[], string drinks[], int
             temp->next = customerJoins;
         }
 
-        cout << "Customer joins the coffee booth queue: " << name << "Drink order: " << drinkOrder << endl;
+        cout << "Customer joins the coffee booth queue: " << name << ", Drink order: " << drinkOrder << endl;
     }
 
     if (customer)
     {
-        cout << "Serving the head customer their drink: " << customer->name << "Drink order: " << customer->drinkOrder << endl;
+        cout << "Serving the head customer their drink: " << customer->name << ", Drink order: " << customer->drinkOrder << endl;
         CoffeeCustomer* temp = customer;
         customer = customer->next;
         delete temp;

@@ -101,6 +101,11 @@ int main()
         string friendshipBraceletOrder = friendshipBracelets[rand() % ARRAY_SIZE];
         friendshipBraceletBoothQueue.push_back(OtherVendorCustomer(friendshipBraceletName, friendshipBraceletOrder));
         cout << "Initial friendship bracelet customer joining the queue: " << friendshipBraceletName << ", Friendship bracelet order: " << friendshipBraceletOrder << endl;
+
+        string foodName = names[rand() % ARRAY_SIZE];
+        string foodOrder = foodItems[rand() % ARRAY_SIZE];
+        foodBoothQueue.push(OtherVendorCustomer(foodName, foodOrder));
+        cout << "Initial food booth customer joining the queue: " << foodName << ", Food order: " << foodOrder << endl;
     }
 
     // run the simulation for 10 rounds
@@ -110,7 +115,7 @@ int main()
         coffeeBooth(coffeeBoothQueue, names, drinks, ARRAY_SIZE);
         muffinBooth(muffinBoothQueue, names, muffins, ARRAY_SIZE);
         friendshipBraceletBooth(friendshipBraceletBoothQueue, names, friendshipBracelets, ARRAY_SIZE);
-
+        foodBooth(foodBoothQueue, names, foodItems, ARRAY_SIZE);
     }
 
     return 0;
@@ -203,5 +208,23 @@ void friendshipBraceletBooth(vector<OtherVendorCustomer>& customerLine, string n
 
 void foodBooth(stack<OtherVendorCustomer>& customerLine, string names[], string foodItems[], int arraySize)
 {
-    
+    int prob = rand() % 100 + 1;
+    if (prob <= PROBABILITY)
+    {
+        string name = names[rand() % ARRAY_SIZE]; 
+        string foodOrder = foodItems[rand() % ARRAY_SIZE];
+        customerLine.push(OtherVendorCustomer(name, foodOrder));
+        cout << "Customer joins the food booth queue: " << name << ", Food order: " << foodOrder << endl;
+    }
+
+    if (!customerLine.empty())
+    {
+        OtherVendorCustomer customer = customerLine.top();
+        customerLine.pop();
+        cout << "Serving the head customer their food: " << customer.name << ", Food order: " << customer.order << endl;
+    }
+    else
+    {
+        cout << "The food booth queue is empty. No customer being served." << endl;
+    }
 }

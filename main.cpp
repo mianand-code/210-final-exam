@@ -43,7 +43,7 @@ const int ARRAY_SIZE = 5;
 const int INITIAL_CUSTOMERS = 3;
 
 // function prototypes
-void createCoffeeCustomer(CoffeeCustomer*&, string[], string[], int);
+void coffeeBooth(CoffeeCustomer*&, string[], string[], int);
 
 int main()
 {
@@ -65,8 +65,36 @@ int main()
     return 0;
 }
 
-void createCoffeeCustomer(CoffeeCustomer*& head, string names[], string drinks[], int arraySize)
+void coffeeBooth(CoffeeCustomer*& customer, string names[], string drinks[], int arraySize)
 {
     int prob = rand() % 100 + 1;
-    if (prob <=)
+    // 50% probability that someone will join the queue
+    if (prob <= 50)
+    {
+        string name = names[rand() % ARRAY_SIZE]; // randomly choose a name
+        string drinkOrder = drinks[rand() % ARRAY_SIZE]; // randomly choose a drink
+        CoffeeCustomer* customerJoins = new CoffeeCustomer(name, drinkOrder);
+
+        if (!customer) 
+        {
+            customer = customerJoins; 
+        } 
+        else 
+        {
+            CoffeeCustomer* temp = customer;
+            while (temp->next) 
+            {
+                temp = temp->next;
+            }
+            
+            temp->next = customerJoins;
+        }
+
+        cout << "Customer joins the coffee booth queue: " << name << "Drink order: " << drinkOrder << endl;
+    }
+
+    if (customer)
+    {
+        cout << "Serving the head customer their drink
+    }
 }

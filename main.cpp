@@ -24,7 +24,7 @@ struct CoffeeCustomer
     }
 };
 
-// creation of a struct (for non-linked-list data structures)
+// creation of another struct with no pointer (for non-linked-list data structures)
 struct OtherVendorCustomer
 {
     string name;
@@ -39,8 +39,11 @@ struct OtherVendorCustomer
 };
 
 // global const variables
+const int ARRAY_SIZE = 5;
+const int INITIAL_CUSTOMERS = 3;
 
 // function prototypes
+void createCoffeeCustomer(CoffeeCustomer*&, string, string);
 
 int main()
 {
@@ -50,5 +53,19 @@ int main()
     string names[] = {"Alice", "Bob", "Charlie", "Diana", "Eve"};
     string drinks[] = {"Latte", "Espresso", "Cappuccino", "Mocha", "Americano"};
 
+    CoffeeCustomer* coffeeBoothQueue = nullptr; // initialization of the coffee booth queue
+
+    for (int i = 0; i < INITIAL_CUSTOMERS; i++) // initialize the queue with 3 customers
+    {
+        string name = names[rand() % ARRAY_SIZE]; // randomly choose a name
+        string drinkOrder = drinks[rand() % ARRAY_SIZE]; // randomly choose a drink
+
+    }
+
     return 0;
+}
+
+void createCoffeeCustomer(CoffeeCustomer*& head, string name, string drinkOrder)
+{
+
 }

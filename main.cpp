@@ -53,12 +53,13 @@ int main()
 {
     srand(time(0)); // first line in main() for randomization purposes
 
-    // creation of data arrays with names and drink orders from which to randomly create customer data
-    string names[] = {"Alice", "Bob", "Charlie", "Diana", "Eve"};
-    string drinks[] = {"Latte", "Espresso", "Cappuccino", "Mocha", "Americano"};
-    string muffins[] = 
+    // creation of data arrays from which to randomly create customer data
+    string names[] = {"Alice", "Bob", "Charlie", "Diana", "Eve"}; // names
+    string drinks[] = {"Latte", "Espresso", "Cappuccino", "Mocha", "Americano"}; // coffee drinks
+    string muffins[] = {"Blueberry", "Chocolate Chip", "Banana Nut", "Oatmeal Raisin", "Cinnamon"}; // muffins
 
     CoffeeCustomer* coffeeBoothQueue = nullptr; // initialization of the coffee booth queue
+    deque<OtherVendorCustomer> muffinBoothQueue; // initialization of the muffin booth queue
 
     for (int i = 0; i < INITIAL_CUSTOMERS; i++) // initialize the queue with 3 customers
     {
@@ -94,7 +95,7 @@ int main()
     return 0;
 }
 
-void coffeeBooth(CoffeeCustomer*& customer, string names[], string drinks[], int arraySize)
+void coffeeBooth(CoffeeCustomer*& customerLine, string names[], string drinks[], int arraySize)
 {
     int prob = rand() % 100 + 1;
     // 50% probability that someone will join the queue
@@ -104,13 +105,13 @@ void coffeeBooth(CoffeeCustomer*& customer, string names[], string drinks[], int
         string drinkOrder = drinks[rand() % ARRAY_SIZE]; // randomly choose a drink
         CoffeeCustomer* customerJoins = new CoffeeCustomer(name, drinkOrder);
 
-        if (!customer) 
+        if (!customerLine) 
         {
-            customer = customerJoins; 
+            customerLine = customerJoins; 
         } 
         else 
         {
-            CoffeeCustomer* temp = customer;
+            CoffeeCustomer* temp = customerLine;
             while (temp->next) 
             {
                 temp = temp->next;
@@ -122,13 +123,36 @@ void coffeeBooth(CoffeeCustomer*& customer, string names[], string drinks[], int
         cout << "Customer joins the coffee booth queue: " << name << ", Drink order: " << drinkOrder << endl;
     }
 
-    if (customer)
+    if (customerLine)
     {
-        cout << "Serving the head customer their drink: " << customer->name << ", Drink order: " << customer->drinkOrder << endl;
-        CoffeeCustomer* temp = customer;
-        customer = customer->next;
+        cout << "Serving the head customer their drink: " << customerLine->name << ", Drink order: " << customerLine->drinkOrder << endl;
+        CoffeeCustomer* temp = customerLine;
+        customerLine = customerLine->next;
         delete temp;
     }
     else
         cout << "The coffee queue is empty. No customer being served." << endl;
+}
+
+void muffinBooth(deque<OtherVendorCustomer>& customerLine, string names[], string muffins[], int arraySize)
+{
+    int prob = rand() % 100 + 1;
+    if (prob <= PROBABILITY)
+    {
+        string name = names[rand() % ARRAY_SIZE]; 
+        string muffinOrder = muffins[rand() % ARRAY_SIZE];
+        customerLine.push_back(OtherVendorCustomer(name, muffinOrder));
+        cout << "Customer joins the muffin booth queue: " << name << ", Muffin order: " << muffinOrder << endl;
+    }
+
+    if (!customerLine.empty())
+    {
+        OtherVendorCustomer customer = customerLine.front();
+        customerLine.pop_front();
+        cout << "Serving the head customer their muffin: " << customer.name << ", Muffin order: " << customer.order << endl;
+    }
+    else
+    {
+        cout << "The muffin queue is empty. No customer being served." << endl;
+    }
 }

@@ -8,12 +8,34 @@
 #include <string>
 using namespace std;
 
-// creation of a struct
+// creation of a struct (for linked list)
 struct CoffeeCustomer
 {
     string name; // to hold the customer's name
     string drinkOrder; // to hold the customer's drink order
     CoffeeCustomer* next; // pointer to next node (customer)
+
+    // constructor
+    CoffeeCustomer(string n, string d)
+    {
+        name = n;
+        drinkOrder = d;
+        next = nullptr;
+    }
+};
+
+// creation of a struct (for non-linked-list data structures)
+struct OtherVendorCustomer
+{
+    string name;
+    string order;
+
+    // constructor
+    OtherVendorCustomer(string n, string o)
+    {
+        name = n;
+        order = o;
+    }
 };
 
 // global const variables

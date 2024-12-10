@@ -59,7 +59,24 @@ int main()
     {
         string name = names[rand() % ARRAY_SIZE]; // randomly choose a name
         string drinkOrder = drinks[rand() % ARRAY_SIZE]; // randomly choose a drink
+        CoffeeCustomer* customerJoins = new CoffeeCustomer(name, drinkOrder);
 
+        if (!coffeeBoothQueue)
+        {
+            coffeeBoothQueue = customerJoins;
+        }
+        else
+        {
+            CoffeeCustomer* temp = coffeeBoothQueue;
+            while (temp->next)
+            {
+                temp = temp->next;
+            }
+
+            temp->next = customerJoins;
+        }
+
+        cout << "Initial coffee customer joining the queue: " << name << "Drink order: " << drinkOrder << endl;
     }
 
     return 0;
@@ -95,6 +112,11 @@ void coffeeBooth(CoffeeCustomer*& customer, string names[], string drinks[], int
 
     if (customer)
     {
-        cout << "Serving the head customer their drink
+        cout << "Serving the head customer their drink: " << customer->name << "Drink order: " << customer->drinkOrder << endl;
+        CoffeeCustomer* temp = customer;
+        customer = customer->next;
+        delete temp;
     }
+    else
+        cout << "The coffee queue is empty. No customer being served." << endl;
 }

@@ -43,7 +43,7 @@ const int ARRAY_SIZE = 5;
 const int INITIAL_CUSTOMERS = 3;
 
 // function prototypes
-void createCoffeeCustomer(CoffeeCustomer*&, string, string);
+void createCoffeeCustomer(CoffeeCustomer*&, string[], string[], int);
 
 int main()
 {
@@ -65,7 +65,8 @@ int main()
     return 0;
 }
 
-void createCoffeeCustomer(CoffeeCustomer*& head, string name, string drinkOrder)
+void createCoffeeCustomer(CoffeeCustomer*& head, string names[], string drinks[], int arraySize)
 {
-    CoffeeCustomer* customer = new CoffeeCustomer(name, drinkOrder);
+    int prob = rand() % 100 + 1;
+    if (prob <=)
 }

@@ -6,6 +6,7 @@
 #include <ctime>
 #include <deque>
 #include <iostream>
+#include <stack>
 #include <string>
 #include <vector>
 using namespace std;
@@ -50,6 +51,7 @@ const int ROUNDS = 10;
 void coffeeBooth(CoffeeCustomer*&, string[], string[], int);
 void muffinBooth(deque<OtherVendorCustomer>&, string[], string[], int);
 void friendshipBraceletBooth(vector<OtherVendorCustomer>&, string[], string[], int);
+void foodBooth(stack<OtherVendorCustomer>&, string[], string[], int);
 
 int main()
 {
@@ -60,10 +62,12 @@ int main()
     string drinks[] = {"Latte", "Espresso", "Cappuccino", "Mocha", "Americano"}; // coffee drinks
     string muffins[] = {"Blueberry", "Chocolate Chip", "Banana Nut", "Oatmeal Raisin", "Cinnamon"}; // muffins
     string friendshipBracelets[] = {"Silver", "Gold", "Beaded", "Leather", "Charm"}; // friendship bracelets
+    string foodItems[] = {"Pizza", "Burger", "Pasta", "Sushi", "Salad"}; // food items
 
     CoffeeCustomer* coffeeBoothQueue = nullptr; // initialization of the coffee booth queue
     deque<OtherVendorCustomer> muffinBoothQueue; // initialization of the muffin booth queue
     vector<OtherVendorCustomer> friendshipBraceletBoothQueue; // initialization of the friendship bracelet booth queue
+    stack<OtherVendorCustomer> foodBoothQueue; // initialization of the food booth queue
 
     for (int i = 0; i < INITIAL_CUSTOMERS; i++) // initialize the queue with 3 customers
     {
@@ -93,6 +97,10 @@ int main()
         muffinBoothQueue.push_back(OtherVendorCustomer(muffinName, muffinOrder));
         cout << "Initial muffin customer joining the queue: " << muffinName << ", Muffin order: " << muffinOrder << endl;
 
+        string friendshipBraceletName = names[rand() % ARRAY_SIZE];
+        string friendshipBraceletOrder = friendshipBracelets[rand() % ARRAY_SIZE];
+        friendshipBraceletBoothQueue.push_back(OtherVendorCustomer(friendshipBraceletName, friendshipBraceletOrder));
+        cout << "Initial friendship bracelet customer joining the queue: " << friendshipBraceletName << ", Friendship bracelet order: " << friendshipBraceletOrder << endl;
     }
 
     // run the simulation for 10 rounds
@@ -101,6 +109,8 @@ int main()
         cout << endl << "Round: " << round << endl;
         coffeeBooth(coffeeBoothQueue, names, drinks, ARRAY_SIZE);
         muffinBooth(muffinBoothQueue, names, muffins, ARRAY_SIZE);
+        friendshipBraceletBooth(friendshipBraceletBoothQueue, names, friendshipBracelets, ARRAY_SIZE);
+
     }
 
     return 0;
@@ -183,10 +193,15 @@ void friendshipBraceletBooth(vector<OtherVendorCustomer>& customerLine, string n
     {
         OtherVendorCustomer customer = customerLine.front();
         customerLine.erase(customerLine.begin()); 
-        cout << "Serving the head customer their friendship bracelet: " << customer.name << ", Friendship bracelet order: " << customer. << endl;
+        cout << "Serving the head customer their friendship bracelet: " << customer.name << ", Friendship bracelet order: " << customer.order << endl;
     }
     else
     {
         cout << "The friendship bracelet queue is empty. No customer being served." << endl;
     }
+}
+
+void foodBooth(stack<OtherVendorCustomer>& customerLine, string names[], string foodItems[], int arraySize)
+{
+    
 }
